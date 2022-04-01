@@ -1,5 +1,4 @@
 const Video = require("../models/Video");
-const { check, validationResult } = require('express-validator');
 
 class VideoController {
     //CREATE
