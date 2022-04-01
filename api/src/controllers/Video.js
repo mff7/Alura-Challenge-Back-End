@@ -1,4 +1,5 @@
 const Video = require("../models/Video");
+const { check, validationResult } = require('express-validator');
 
 class VideoController {
     //CREATE
@@ -18,12 +19,10 @@ class VideoController {
         try {
             const updatedVideo = await Video.findByIdAndUpdate(
                 req.params.id,
-                {
-                    $set: req.body
-                },
+                { $set: req.body },
                 { new: true }
             );
-            res.status(200).json(updatedVideo);
+            return res.status(200).json(updatedVideo);
         } catch (err) {
             return res.status(500).json(err);
         }
@@ -53,9 +52,9 @@ class VideoController {
     async delete(req, res) {
         try {
             await Video.findByIdAndDelete(req.params.id);
-            res.status(200).json("Video has been deleted...");
+            return res.status(200).json("Video has been deleted...");
         } catch (err) {
-            res.status(500).json(err);
+            return res.status(500).json(err);
         }
     }
 }
