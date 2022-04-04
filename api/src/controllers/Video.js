@@ -1,29 +1,74 @@
 const Video = require("../models/Video");
+const Category = require("../models/Category");
 
 class VideoController {
     //CREATE
-    async create(req, res) {
-        const newVideo = new Video(req.body);
+    async create(req, res) { 
+        const { categoryId, title, desc, url } = req.body;
+
+        var CategoryId;
+
+        if (!categoryId) {
+            CategoryId = "624b658fdcca3079c9f99746"
+        } else {
+            CategoryId = categoryId
+        }
 
         try {
+            try {
+                const category = await Category.findById(CategoryId);
+                
+                if (category === null) {
+                    return res.status(400).json("Category does not exist...");
+                }
+            } catch (err) {
+                return res.status(400).json(err);
+            }
+
+            const newVideo = new Video({ categoryId: CategoryId, title, desc, url });
             const savedVideo = await newVideo.save();
             return res.status(200).json(savedVideo);
         } catch (err) {
-            return res.status(500).json(err);
+            return res.status(400).json(err);
         }
     }
 
     //UPDATE
     async update(req, res) {
+        const { categoryId, title, desc, url } = req.body;
+
+        var CategoryId;
+
+        if (!categoryId) {
+            CategoryId = "624b658fdcca3079c9f99746"
+        } else {
+            CategoryId = categoryId
+        }
+
         try {
+            try {
+                const category = await Category.findById(CategoryId);
+                
+                if (category === null) {
+                    return res.status(400).json("Category does not exist...");
+                }
+            } catch (err) {
+                return res.status(400).json(err);
+            }
+
             const updatedVideo = await Video.findByIdAndUpdate(
                 req.params.id,
-                { $set: req.body },
+                { $set: { categoryId: CategoryId, title, desc, url } },
                 { new: true }
             );
+
+            if (updatedVideo === null) {
+                return res.status(400).json("Video does not exist...");
+            }
+
             return res.status(200).json(updatedVideo);
         } catch (err) {
-            return res.status(500).json(err);
+            return res.status(400).json(err);
         }
     }
 
@@ -33,7 +78,7 @@ class VideoController {
             const videos = await Video.find();
             return res.send(videos);
         } catch (err) {
-            return res.status(500).json(err);
+            return res.status(400).json(err);
         }
     }
 
@@ -41,19 +86,29 @@ class VideoController {
     async showById(req, res) {
         try {
             const video = await Video.findById(req.params.id);
+
+            if (video === null) {
+                return res.status(400).json("Video does not exist...");
+            }
+
             return res.send(video);
         } catch (err) {
-            return res.status(500).json(err);
+            return res.status(400).json(err);
         }
     }
 
     //DELETE
     async delete(req, res) {
         try {
-            await Video.findByIdAndDelete(req.params.id);
+            const video = await Video.findByIdAndDelete(req.params.id);
+
+            if (video === null) {
+                return res.status(400).json("Video does not exist...");
+            }
+
             return res.status(200).json("Video has been deleted...");
         } catch (err) {
-            return res.status(500).json(err);
+            return res.status(400).json(err);
         }
     }
 }

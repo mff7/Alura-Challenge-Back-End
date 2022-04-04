@@ -9,28 +9,13 @@ const generateValidators = () => [
         .isEmpty()
         .withMessage("Title can not be empty!"),
     
-    check("desc")
+    check("color")
         .isString()
         .withMessage("Invalid format!")
         .trim()
         .not()
         .isEmpty()
-        .withMessage("Description can not be empty!")
-        .isLength({min: 20})
-        .withMessage("Minimum 20 characters required!"),
-    
-    check("url")
-        .isString()
-        .withMessage("Invalid format!")
-        .trim()
-        .not()
-        .isEmpty()
-        .withMessage("Url can not be empty!")
-        .isURL({
-            protocols: ["http", "https"],
-            require_valid_protocol: true
-        })
-        .withMessage("Invalid url!")
+        .withMessage("Color can not be empty!")
 ];
 
 const reporter = (req, res, next) => {
