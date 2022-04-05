@@ -1,4 +1,5 @@
 const Category = require("../models/Category");
+const Video = require("../models/Video");
 
 class CategoryController {
     //CREATE
@@ -43,7 +44,7 @@ class CategoryController {
     }
 
     //FIND BY ID
-    async showById(req, res) {
+    async view(req, res) {
         try {
             const category = await Category.findById(req.params.id);
 
@@ -53,7 +54,19 @@ class CategoryController {
 
             return res.send(category);
         } catch (err) {
-            return res.status(500).json(err);
+            return res.status(400).json(err);
+        }
+    }
+
+    //VIDEOS BY CATEGORY
+    async videos(req, res) {
+        const id = req.params.id;
+
+        try {
+            const videos = await Video.find({ categoryId: id });
+            return res.send(videos);
+        } catch (err) {
+            return res.status(400).json(err);
         }
     }
 

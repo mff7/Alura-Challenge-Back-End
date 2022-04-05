@@ -9,7 +9,7 @@ class VideoController {
         var CategoryId;
 
         if (!categoryId) {
-            CategoryId = "624b658fdcca3079c9f99746"
+            CategoryId = process.env.FIRST_CATEGORY
         } else {
             CategoryId = categoryId
         }
@@ -40,7 +40,7 @@ class VideoController {
         var CategoryId;
 
         if (!categoryId) {
-            CategoryId = "624b658fdcca3079c9f99746"
+            CategoryId = process.env.FIRST_CATEGORY
         } else {
             CategoryId = categoryId
         }
@@ -83,7 +83,7 @@ class VideoController {
     }
 
     //FIND BY ID
-    async showById(req, res) {
+    async view(req, res) {
         try {
             const video = await Video.findById(req.params.id);
 
@@ -92,6 +92,18 @@ class VideoController {
             }
 
             return res.send(video);
+        } catch (err) {
+            return res.status(400).json(err);
+        }
+    }
+
+    //SEARCH BY TITLE
+    async indexByTitle(req, res) {
+        const title = req.query.search;
+
+        try {
+            const videos = await Video.find({ "title": title });
+            return res.send(videos);
         } catch (err) {
             return res.status(400).json(err);
         }

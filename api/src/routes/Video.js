@@ -9,7 +9,8 @@ routes.post("/videos", videoValidator.createAndUpdate, VideoController.create);
 routes.put("/videos/:id", videoValidator.createAndUpdate, VideoController.update);
 
 routes.get("/videos", VideoController.index);
-routes.get("/videos/:id", VideoController.showById);
+routes.get("/videos/view/:id", VideoController.view);
+routes.get("/videos/title/", VideoController.indexByTitle);
 
 routes.delete("/videos/:id", VideoController.delete);
 

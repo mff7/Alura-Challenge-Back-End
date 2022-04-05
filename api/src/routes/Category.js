@@ -9,7 +9,8 @@ routes.post("/categories", categoryValidator.createAndUpdate, CategoriesControll
 routes.put("/categories/:id", categoryValidator.createAndUpdate, CategoriesController.update);
 
 routes.get("/categories", CategoriesController.index);
-routes.get("/categories/:id", CategoriesController.showById);
+routes.get("/categories/view/:id", CategoriesController.view);
+routes.get("/categories/:id/videos", CategoriesController.videos);
 
 routes.delete("/categories/:id", CategoriesController.delete);
 
