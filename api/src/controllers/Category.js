@@ -63,7 +63,7 @@ class CategoryController {
         const id = req.params.id;
 
         try {
-            const videos = await Video.find({ categoryId: id });
+            const videos = await Video.find({ "categoryId": id });
             return res.send(videos);
         } catch (err) {
             return res.status(400).json(err);

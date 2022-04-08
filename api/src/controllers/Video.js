@@ -6,12 +6,12 @@ class VideoController {
     async create(req, res) { 
         const { categoryId, title, desc, url } = req.body;
 
-        var CategoryId;
+        let CategoryId;
 
         if (!categoryId) {
-            CategoryId = process.env.FIRST_CATEGORY
+            CategoryId = process.env.FIRST_CATEGORY;
         } else {
-            CategoryId = categoryId
+            CategoryId = categoryId;
         }
 
         try {
@@ -37,12 +37,12 @@ class VideoController {
     async update(req, res) {
         const { categoryId, title, desc, url } = req.body;
 
-        var CategoryId;
+        let CategoryId;
 
         if (!categoryId) {
-            CategoryId = process.env.FIRST_CATEGORY
+            CategoryId = process.env.FIRST_CATEGORY;
         } else {
-            CategoryId = categoryId
+            CategoryId = categoryId;
         }
 
         try {
